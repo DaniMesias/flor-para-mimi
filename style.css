@@ -1,7 +1,7 @@
 body {
   margin: 0;
   padding: 0;
-  background: #f3e5f5;
+  background: black;
   overflow: hidden;
   font-family: "Segoe UI", sans-serif;
 }
@@ -11,30 +11,32 @@ body {
   width: 100vw;
   height: 100vh;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
-  flex-direction: column;
+  padding-bottom: 40px;
 }
 
 .flower {
-  animation: spin 20s linear infinite;
-  cursor: pointer;
+  animation: sway 3s ease-in-out infinite alternate;
+  transform-origin: bottom center;
   z-index: 2;
+  cursor: pointer;
 }
 
-@keyframes spin {
+@keyframes sway {
   from {
-    transform: rotate(0deg);
+    transform: rotate(-1deg);
   }
   to {
-    transform: rotate(360deg);
+    transform: rotate(1deg);
   }
 }
 
 .message {
-  margin-top: 20px;
+  position: absolute;
+  top: 40px;
   font-size: 1.2rem;
-  color: #6a1b9a;
+  color: #e1bee7;
   font-weight: bold;
   text-align: center;
   z-index: 2;
@@ -43,6 +45,12 @@ body {
 canvas#particles-bg {
   position: absolute;
   top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
   left: 0;
   width: 100%;
   height: 100%;
