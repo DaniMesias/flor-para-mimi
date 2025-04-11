@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Flor para Mimi 🌸</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <canvas id="particles-bg"></canvas>
+
+  <div class="container">
+    <div class="flower" id="flower">
+      <!-- SVG de la flor -->
+      <svg viewBox="0 0 200 200" width="200" height="200">
+        <g transform="translate(100,100)">
+          <circle r="20" fill="#b388eb"/>
+          <g id="petals">
+            <ellipse rx="20" ry="40" fill="#cda4de" transform="rotate(0) translate(0, -50)"/>
+            <ellipse rx="20" ry="40" fill="#cda4de" transform="rotate(60) translate(0, -50)"/>
+            <ellipse rx="20" ry="40" fill="#cda4de" transform="rotate(120) translate(0, -50)"/>
+            <ellipse rx="20" ry="40" fill="#cda4de" transform="rotate(180) translate(0, -50)"/>
+            <ellipse rx="20" ry="40" fill="#cda4de" transform="rotate(240) translate(0, -50)"/>
+            <ellipse rx="20" ry="40" fill="#cda4de" transform="rotate(300) translate(0, -50)"/>
+          </g>
+          <rect x="-5" y="20" width="10" height="60" fill="#81c784" rx="5"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="message" id="message"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
