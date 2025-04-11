@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Flor para Mimi 🌸</title>
+  <title>Peonía para Mimi 🌸</title>
   <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
@@ -11,22 +11,31 @@
 
   <div class="container">
     <div class="flower" id="flower">
-      <!-- SVG de la flor -->
-      <svg viewBox="0 0 200 200" width="200" height="200">
-        <g transform="translate(100,100)">
-          <circle r="20" fill="#b388eb"/>
-          <g id="petals">
-            <ellipse rx="20" ry="40" fill="#cda4de" transform="rotate(0) translate(0, -50)"/>
-            <ellipse rx="20" ry="40" fill="#cda4de" transform="rotate(60) translate(0, -50)"/>
-            <ellipse rx="20" ry="40" fill="#cda4de" transform="rotate(120) translate(0, -50)"/>
-            <ellipse rx="20" ry="40" fill="#cda4de" transform="rotate(180) translate(0, -50)"/>
-            <ellipse rx="20" ry="40" fill="#cda4de" transform="rotate(240) translate(0, -50)"/>
-            <ellipse rx="20" ry="40" fill="#cda4de" transform="rotate(300) translate(0, -50)"/>
-          </g>
-          <rect x="-5" y="20" width="10" height="60" fill="#81c784" rx="5"/>
+      <!-- SVG PEONÍA LILA -->
+      <svg viewBox="0 0 200 300" width="200" height="300">
+        <!-- Pasto -->
+        <rect x="0" y="280" width="200" height="20" fill="#4caf50" />
+        
+        <!-- Tallo -->
+        <rect x="95" y="150" width="10" height="130" fill="#388e3c" rx="3"/>
+
+        <!-- Flor (peonía lilas) -->
+        <g id="peony" transform="translate(100, 140)">
+          <circle r="30" fill="#cba0e8"/>
+          <circle r="25" fill="#d1a9ec" cx="5" cy="-5"/>
+          <circle r="20" fill="#ddaef4" cx="-5" cy="-5"/>
+          <circle r="15" fill="#f1ceff" cx="0" cy="5"/>
         </g>
       </svg>
     </div>
+
+    <div class="message" id="message"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
 
     <div class="message" id="message"></div>
   </div>
