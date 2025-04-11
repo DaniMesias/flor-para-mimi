@@ -3,42 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Peonía para Mimi 🌸</title>
-  <link rel="stylesheet" href="style.css"/>
+  <title>Flores para Mimi 🌸</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <canvas id="particles-bg"></canvas>
 
-  <div class="container">
-    <div class="flower" id="flower">
-      <!-- SVG PEONÍA LILA -->
-      <svg viewBox="0 0 200 300" width="200" height="300">
-        <!-- Pasto -->
-        <rect x="0" y="280" width="200" height="20" fill="#4caf50" />
-        
-        <!-- Tallo -->
-        <rect x="95" y="150" width="10" height="130" fill="#388e3c" rx="3"/>
-
-        <!-- Flor (peonía lilas) -->
-        <g id="peony" transform="translate(100, 140)">
-          <circle r="30" fill="#cba0e8"/>
-          <circle r="25" fill="#d1a9ec" cx="5" cy="-5"/>
-          <circle r="20" fill="#ddaef4" cx="-5" cy="-5"/>
-          <circle r="15" fill="#f1ceff" cx="0" cy="5"/>
-        </g>
-      </svg>
-    </div>
-
-    <div class="message" id="message"></div>
+  <div class="scene" id="scene">
+    <!-- Se insertarán múltiples flores usando JavaScript -->
   </div>
 
-  <script src="script.js"></script>
-</body>
-</html>
-
-
-    <div class="message" id="message"></div>
-  </div>
+  <div class="message" id="message"></div>
 
   <script src="script.js"></script>
 </body>
