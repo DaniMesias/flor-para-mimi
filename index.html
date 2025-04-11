@@ -3,7 +3,85 @@
 <head>
   <meta charset="UTF-8">
   <title>Flores Moradas</title>
-  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #0a0a23;
+    }
+
+    .sky {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .stars {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 50% 50%, 
+        #fff 0.5px, 
+        rgba(0, 0, 0, 0) 1px);
+      background-size: 20px 20px;
+    }
+
+    .grass {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 100px;
+      background: #1a5a1a;
+    }
+
+    .flowers {
+      position: absolute;
+      bottom: 100px;
+      width: 100%;
+      height: 200px;
+    }
+
+    .flower {
+      position: absolute;
+      bottom: 0;
+      left: calc((var(--pos) - 1) * 11%);
+      width: 30px;
+      height: 100px;
+    }
+
+    .flower::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 4px;
+      height: 80px;
+      background: #2d5a2d;
+      transform: translateX(-50%);
+    }
+
+    .flower::after {
+      content: '';
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      width: 30px;
+      height: 30px;
+      background: #9370db;
+      border-radius: 50%;
+      transform: translateX(-50%);
+      box-shadow: 
+        0 -25px 0 -8px #8a2be2,
+        0 25px 0 -8px #8a2be2,
+        25px 0 0 -8px #8a2be2,
+        -25px 0 0 -8px #8a2be2,
+        18px 18px 0 -8px #8a2be2,
+        -18px 18px 0 -8px #8a2be2,
+        18px -18px 0 -8px #8a2be2,
+        -18px -18px 0 -8px #8a2be2;
+    }
+  </style>
 </head>
 <body>
   <div class="sky">
