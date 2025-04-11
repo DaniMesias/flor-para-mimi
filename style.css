@@ -1,82 +1,65 @@
-/* Reset */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-body {
-  background: black;
-  height: 100vh;
+body, html {
+  height: 100%;
+  width: 100%;
+  background: #000;
   overflow: hidden;
   font-family: sans-serif;
 }
 
-.sky {
-  width: 100%;
-  height: 100%;
+.night-sky {
   position: relative;
-  background: black;
+  height: 100vh;
+  width: 100%;
+  background: #000;
 }
 
-/* Estrellas */
-.stars {
+#stars {
   position: absolute;
-  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+.flower-garden {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: end;
   height: 100%;
-  background-image: radial-gradient(white 0.8px, transparent 0.8px);
-  background-size: 40px 40px;
-  opacity: 0.6;
+  padding-bottom: 50px;
   z-index: 1;
 }
 
-/* Césped */
-.grass {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 60px;
-  background: radial-gradient(ellipse at bottom, #1f3c1f, #0f1a0f);
-  z-index: 2;
-}
-
-/* Contenedor de flores */
-.flowers {
-  position: absolute;
-  bottom: 60px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 20px;
-  z-index: 3;
-}
-
-/* Flor */
 .flower {
-  width: 70px;
-  height: 70px;
-  background: radial-gradient(circle at 30% 30%, #a162c2 0%, #5a2a7d 100%);
-  border-radius: 50%;
   position: relative;
-  animation: float 4s ease-in-out infinite;
+  width: 80px;
+  height: 80px;
+  background: radial-gradient(circle, #9b59b6 0%, #6c3483 70%);
+  border-radius: 50%;
+  margin: 10px;
+  animation: sway 6s ease-in-out infinite alternate;
 }
 
-/* Tallos */
-.flower::before {
+.flower::after {
   content: '';
   position: absolute;
-  bottom: -80px;
+  bottom: -100px;
   left: 50%;
   transform: translateX(-50%);
   width: 6px;
-  height: 80px;
-  background: #2e5e2c;
+  height: 100px;
+  background: linear-gradient(to top, #145a32, #27ae60);
   border-radius: 3px;
 }
 
-/* Animación sutil */
-@keyframes float {
-  0%, 100% { transform: translateY(0) scale(1); }
-  50% { transform: translateY(-5px) scale(1.02); }
+@keyframes sway {
+  0% { transform: rotate(-2deg); }
+  100% { transform: rotate(2deg); }
 }
