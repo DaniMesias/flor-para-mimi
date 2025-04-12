@@ -1,229 +1,96 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Peonías Cuánticas</title>
-    <style>
-        * { margin: 0; padding: 0; }
-        canvas { display: block; }
-        body { overflow: hidden; background: #000; }
-        #info { position: absolute; top: 10px; left: 10px; color: #fff; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flores para mi Amor</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background-color: black;
+    }
+    canvas {
+      display: block;
+    }
+  </style>
 </head>
 <body>
-    <div id="info">🌸 Haz clic para mensajes especiales</div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.8.0/gsap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/cannon-es@0.19.0/dist/cannon-es.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  <script type="module">
+    import * as THREE from 'https://cdn.skypack.dev/three@0.150.1';
+    import { GLTFLoader } from 'https://cdn.skypack.dev/three@0.150.1/examples/jsm/loaders/GLTFLoader.js';
 
-<script>
-// 1. Configuración inicial
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
-const renderer = new THREE.WebGLRenderer({ antialias: true });
-renderer.setSize(window.innerWidth, window.innerHeight);
-document.body.appendChild(renderer.domElement);
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.set(0, 2, 8);
 
-// 2. Sistema de partículas estelares
-const particles = new THREE.BufferGeometry();
-const particlePositions = [];
-for(let i = 0; i < 5000; i++) {
-    particlePositions.push(
-        Math.random() * 1600 - 800,
-        Math.random() * 1600 - 800,
-        Math.random() * 1600 - 800
-    );
-}
-particles.setAttribute('position', new THREE.Float32BufferAttribute(particlePositions, 3));
-const particleMaterial = new THREE.PointsMaterial({ size: 0.7, color: 0xFFFFFF });
-const particleSystem = new THREE.Points(particles, particleMaterial);
-scene.add(particleSystem);
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
 
-// 3. Generador de peonías (Sistema complejo)
-class Peonia {
-    constructor() {
-        this.group = new THREE.Group();
-        this.createStem();
-        this.createPetals();
-        this.createStamens();
-        this.createRoots();
-        this.addPhysics();
+    // Estrellas de fondo
+    const starGeometry = new THREE.BufferGeometry();
+    const starCount = 1000;
+    const starVertices = [];
+    for (let i = 0; i < starCount; i++) {
+      starVertices.push(
+        (Math.random() - 0.5) * 100,
+        (Math.random() - 0.5) * 100,
+        (Math.random() - 0.5) * 100
+      );
     }
+    starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
+    const starMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 0.5 });
+    const stars = new THREE.Points(starGeometry, starMaterial);
+    scene.add(stars);
 
-    createStem() {
-        const stemGeometry = new THREE.CylinderGeometry(0.3, 0.5, 15, 32);
-        const stemMaterial = new THREE.MeshPhongMaterial({ 
-            color: 0x3d7a3d,
-            bumpScale: 0.05,
-            specular: 0x222222,
-            shininess: 100
-        });
-        this.stem = new THREE.Mesh(stemGeometry, stemMaterial);
-        this.stem.rotation.x = Math.PI / 2;
-        this.group.add(this.stem);
-    }
+    const loader = new GLTFLoader();
+    const flowerGroup = new THREE.Group();
+    scene.add(flowerGroup);
 
-    createPetals() {
-        const petalGeometry = new THREE.SphereGeometry(2, 32, 32, 0, Math.PI/1.5);
-        const petalMaterial = new THREE.MeshPhysicalMaterial({
-            color: 0xff99ff,
-            transmission: 0.4,
-            roughness: 0.3,
-            thickness: 0.2,
-            specularIntensity: 0.7,
-            side: THREE.DoubleSide
-        });
+    let flowers = [];
+    const flowerPositions = [
+      [-3, 0, 0],
+      [-1.5, 0, -1],
+      [0, 0, 0],
+      [1.5, 0, -1],
+      [3, 0, 0],
+      [0, 0, 2]
+    ];
 
-        this.petals = [];
-        for(let i = 0; i < 40; i++) {
-            const petal = new THREE.Mesh(petalGeometry, petalMaterial);
-            petal.position.y = 5 + i * 0.3;
-            petal.rotation.z = Math.random() * Math.PI * 2;
-            petal.scale.set(1.3 - i*0.02, 1.3 - i*0.02, 0.1);
-            this.petals.push(petal);
-            this.group.add(petal);
-        }
-    }
-
-    createStamens() {
-        const stamenGeometry = new THREE.SphereGeometry(0.1, 16, 16);
-        const stamenMaterial = new THREE.MeshBasicMaterial({ 
-            color: 0xffdd55,
-            gradientMap: new THREE.TextureLoader().load('https://i.imgur.com/5V7ZJYF.png')
-        });
-
-        for(let i = 0; i < 80; i++) {
-            const stamen = new THREE.Mesh(stamenGeometry, stamenMaterial);
-            stamen.position.set(
-                (Math.random() - 0.5) * 1.5,
-                8.5 + Math.random() * 0.5,
-                (Math.random() - 0.5) * 1.5
-            );
-            this.group.add(stamen);
-        }
-    }
-
-    createRoots() {
-        const rootGeometry = new THREE.TubeGeometry(
-            new THREE.CatmullRomCurve3([
-                new THREE.Vector3(0, 0, 0),
-                new THREE.Vector3(Math.random()*2-1, -3, Math.random()*2-1),
-                new THREE.Vector3(Math.random()*4-2, -6, Math.random()*4-2)
-            ]), 64, 0.2, 8, false
-        );
-        
-        const rootMaterial = new THREE.MeshLambertMaterial({ 
-            color: 0x4a3728,
-            wireframe: false 
-        });
-
-        for(let i = 0; i < 8; i++) {
-            const root = new THREE.Mesh(rootGeometry, rootMaterial);
-            root.rotation.y = (Math.PI / 4) * i;
-            this.group.add(root);
-        }
-    }
-
-    addPhysics() {
-        // Configuración física con Cannon.js
-        this.stemBody = new CANNON.Body({ mass: 0 });
-        this.stemBody.addShape(new CANNON.Cylinder(0.3, 0.5, 15));
-        world.addBody(this.stemBody);
-    }
-}
-
-// 4. Sistema de suelo orgánico
-const groundGeometry = new THREE.PlaneGeometry(200, 200, 50, 50);
-const groundMaterial = new THREE.MeshStandardMaterial({
-    color: 0x1a3a1a,
-    displacementScale: 3,
-    roughness: 0.8,
-    metalness: 0.2
-});
-const ground = new THREE.Mesh(groundGeometry, groundMaterial);
-ground.rotation.x = -Math.PI / 2;
-ground.position.y = -7;
-scene.add(ground);
-
-// 5. Iluminación profesional
-const light = new THREE.PointLight(0xffddcc, 1.5, 100);
-light.position.set(10, 15, 10);
-scene.add(light);
-
-const ambient = new THREE.AmbientLight(0x404040);
-scene.add(ambient);
-
-const hemisphereLight = new THREE.HemisphereLight(0x443333, 0x111122, 0.6);
-scene.add(hemisphereLight);
-
-// 6. Configuración física
-const world = new CANNON.World();
-world.gravity.set(0, -9.82, 0);
-
-// 7. Generar ramo de peonías
-const peonias = [];
-for(let i = 0; i < 5; i++) {
-    const p = new Peonia();
-    p.group.position.x = (i - 2) * 5;
-    p.group.position.z = Math.random() * 3 - 1.5;
-    scene.add(p.group);
-    peonias.push(p);
-}
-
-// 8. Animación y renderizado
-camera.position.set(0, 5, 20);
-const controls = new THREE.OrbitControls(camera, renderer.domElement);
-
-function animate() {
-    requestAnimationFrame(animate);
-    
-    // Actualizar física
-    world.step(1/60);
-    
-    // Sincronizar modelos 3D con cuerpos físicos
-    peonias.forEach(p => {
-        p.stem.position.copy(p.stemBody.position);
-        p.stem.quaternion.copy(p.stemBody.quaternion);
+    loader.load('peonia_lila.glb', (gltf) => {
+      for (let i = 0; i < 6; i++) {
+        const flower = gltf.scene.clone();
+        flower.position.set(...flowerPositions[i]);
+        flower.scale.set(1.5, 1.5, 1.5);
+        flowerGroup.add(flower);
+        flowers.push(flower);
+      }
     });
 
-    renderer.render(scene, camera);
-}
-animate();
+    // Luz
+    const ambientLight = new THREE.AmbientLight(0xffffff, 1.5);
+    scene.add(ambientLight);
 
-// 9. Interactividad y mensajes
-const messages = [
-    "Te amo Mimi <3", 
-    "Eres mi universo", 
-    "Brillas más que las estrellas",
-    "Eres eternamente hermosa"
-];
+    const clock = new THREE.Clock();
 
-document.addEventListener('click', () => {
-    const messageElem = document.createElement('div');
-    messageElem.style.cssText = `
-        position: fixed;
-        top: ${Math.random() * 80 + 10}%;
-        left: ${Math.random() * 80 + 10}%;
-        color: #ff99ff;
-        font-size: 2em;
-        text-shadow: 0 0 10px #ff00ff;
-        pointer-events: none;
-        transition: 2s;
-    `;
-    messageElem.textContent = messages[Math.floor(Math.random() * messages.length)];
-    document.body.appendChild(messageElem);
-    
-    setTimeout(() => document.body.removeChild(messageElem), 2000);
-});
+    function animate() {
+      requestAnimationFrame(animate);
+      const t = clock.getElapsedTime();
+      flowers.forEach((flower, i) => {
+        const sway = Math.sin(t + i) * 0.03;
+        flower.rotation.z = sway;
+      });
+      renderer.render(scene, camera);
+    }
 
-// 10. Optimización de ventana
-window.addEventListener('resize', () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-});
-</script>
+    animate();
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+  </script>
 </body>
 </html>
